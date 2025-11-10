@@ -23,7 +23,5 @@ public class Workout {
 
         if(groundType == null ) throw new IllegalArgumentException("Ground type must exist.");
 
-
-
     }
 }

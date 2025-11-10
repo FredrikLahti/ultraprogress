@@ -1,0 +1,2 @@
+1. Add daily steps and steps over time. Like when taking a walk I wont add to workout but I want the steps to count anyways.
+2. Add comments to all existing methods and classes so that I know I make sense.
