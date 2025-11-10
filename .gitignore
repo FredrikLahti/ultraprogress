@@ -1,0 +1,21 @@
+@"
+# Gradle/Java
+/build/
+/out/
+/.gradle/
+/*.iml
+
+# IDE
+/.idea/
+/.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data
+.env
+*.db
+*.fit
+*.gpx
+"@ | Set-Content .gitignore -NoNewline
