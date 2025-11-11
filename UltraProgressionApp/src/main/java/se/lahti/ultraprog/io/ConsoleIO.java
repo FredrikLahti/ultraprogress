@@ -44,6 +44,10 @@ public class ConsoleIO {
         out.println();
     }
 
+    public void printf(String s, Object... args ){
+        out.printf(s, args);
+    }
+
 
     //Clear Screen
 

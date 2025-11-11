@@ -2,10 +2,13 @@ package se.lahti.ultraprog.service;
 
 import se.lahti.ultraprog.app.CreateWorkoutRequest;
 import se.lahti.ultraprog.domain.Workout;
+import se.lahti.ultraprog.domain.WorkoutHandle;
 import se.lahti.ultraprog.domain.WorkoutId;
 import se.lahti.ultraprog.repo.WorkoutRepo;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 
 public class WorkoutService {
@@ -15,19 +18,39 @@ public class WorkoutService {
         this.workoutRepo = workoutRepo;
     }
 
-    public WorkoutId logWorkout(CreateWorkoutRequest workoutReq){
+    public void logWorkout(CreateWorkoutRequest workoutReq){
 
+        //---Parameters that are input dependant----
         String groundType = workoutReq.groundType();
         double distanceKm = workoutReq.distanceKm();
-        double timeMin = workoutReq.timeMin();
+        int timeMin = workoutReq.timeMin();
         double pace = workoutReq.pace();
         int calories = workoutReq.calories();
         int cadence = workoutReq.cadence();
         int avgHr = workoutReq.avgHr();
         LocalDate workoutDate = workoutReq.workoutDate();
 
-        Workout workout = Workout.create(groundType, distanceKm, timeMin, pace, calories, cadence, avgHr, workoutDate);
-        return workoutRepo.save(workout);
+
+        //----Fields no user should be able to change.
+        WorkoutHandle handle = new WorkoutHandle(workoutDate,workoutRepo.nextSeqDate(workoutDate));
+        WorkoutId id = WorkoutId.newId();
+
+
+        //Calls to create a workout and return that workout.
+        Workout workout = Workout.create(groundType, distanceKm, timeMin, pace, calories, cadence, avgHr,
+                workoutDate, handle, id);
+        //Store workout inside the repo.
+        workoutRepo.save(workout);
+
+    }
+
+
+    public Workout findWorkout(LocalDate workoutDate){
+        return workoutRepo.findWorkoutByDate(workoutDate);
+    }
+
+    public List<Workout> viewWorkouts(LocalDate from, LocalDate to){
+        List<Workout> foundWorkouts = workoutRepo.findBetween(from,to);
 
     }
 }

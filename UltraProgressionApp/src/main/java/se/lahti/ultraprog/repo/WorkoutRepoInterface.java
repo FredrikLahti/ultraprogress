@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface WorkoutRepoInterface {
 
-    WorkoutId save(Workout w);
-    Optional<Workout> findById(WorkoutId id);
+    void save(Workout w);
+    Workout findWorkoutByDate(LocalDate workoutDate);
     List<Workout> findBetween(LocalDate from, LocalDate to);
     void delete(WorkoutId id);
 }
