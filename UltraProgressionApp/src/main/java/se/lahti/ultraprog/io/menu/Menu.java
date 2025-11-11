@@ -4,6 +4,8 @@ import se.lahti.ultraprog.io.ConsoleIO;
 import se.lahti.ultraprog.io.nav.Nav;
 import se.lahti.ultraprog.service.Services;
 
+import java.time.format.DateTimeFormatter;
+
 public interface Menu {
 
     String title();

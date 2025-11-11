@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -34,6 +33,7 @@ public class ConsoleIO {
 
 
     //------Printing-----------
+
     public void println(String s){
         out.println(s);
     }
@@ -47,6 +47,11 @@ public class ConsoleIO {
 
     //Clear Screen
 
+    /**
+     * Clears the console screen either using ASCII or if  that fails simply by printing 30 blank
+     * lines into the console.
+     *
+     */
     public void clearScreen(){
         try{
             out.printf("\033[H\033[2J");
@@ -106,6 +111,25 @@ public class ConsoleIO {
             return userInt;
         }
     }
+
+
+    //-----------Doubles------------
+
+    public double readDouble(String prompt){
+        while (true){
+            String doubleLine = readLine(prompt);
+            try{
+                return Integer.parseInt(doubleLine);
+
+            } catch (NumberFormatException e){
+                println("Invalid input. Try again..");
+            }
+        }
+    }
+
+    //----Ground Type-----------
+
+
 
     //--------Booleans-----------
 

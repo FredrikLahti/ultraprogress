@@ -1,18 +1,22 @@
 package se.lahti.ultraprog.domain;
+import se.lahti.ultraprog.app.CreateWorkoutRequest;
 import se.lahti.ultraprog.util.Validate;
 
+import java.time.LocalDate;
+
 public class Workout {
-    private GroundType groundType;
+    private String groundType;
     private double distanceKm;
     private double timeMin;
     private double pace;
     private int calories;
     private int cadence;
     private int avgHr;
-    private final double DEFAULT = 0.0;
+    private LocalDate workoutDate;
 
-    public Workout(GroundType groundType, double distance, double time, double pace, int calories
-    , int cadence, int avgHr){
+
+    public Workout(String groundType, double distance, double time, double pace, int calories
+    , int cadence, int avgHr, LocalDate workoutDate){
         this.groundType = groundType;
         this.distanceKm = Validate.requirePositive(distance,"distance in km ");
         this.timeMin = Validate.requirePositive(time,"Time in Minutes ");
@@ -20,8 +24,20 @@ public class Workout {
         this.calories = Validate.requirePositive(calories, "Calories ");
         this.cadence = Validate.requirePositive(cadence, "Cadence ");
         this.avgHr = Validate.requireRange(avgHr,30,230, "Average Heart Rate ");
+        this.workoutDate = workoutDate;
 
-        if(groundType == null ) throw new IllegalArgumentException("Ground type must exist.");
+        if(groundType == null || groundType.isBlank()) throw new IllegalArgumentException("Surface type must exist.");
 
+
+    }
+
+
+
+    public static Workout create(String groundType, double distanceKm, double timeMin, double pace,
+                                 int calories, int cadence, int avgHr, LocalDate workoutDate){
+
+
+
+        return new Workout(groundType, distanceKm, timeMin, pace, calories, cadence, avgHr, workoutDate);
     }
 }
