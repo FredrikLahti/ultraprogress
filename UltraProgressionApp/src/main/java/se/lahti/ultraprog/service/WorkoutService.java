@@ -7,6 +7,8 @@ import se.lahti.ultraprog.domain.WorkoutId;
 import se.lahti.ultraprog.repo.WorkoutRepo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,7 @@ public class WorkoutService {
         //---Parameters that are input dependant----
         String groundType = workoutReq.groundType();
         double distanceKm = workoutReq.distanceKm();
-        int timeMin = workoutReq.timeMin();
+        double timeMin = workoutReq.timeMin();
         double pace = workoutReq.pace();
         int calories = workoutReq.calories();
         int cadence = workoutReq.cadence();
@@ -50,7 +52,19 @@ public class WorkoutService {
     }
 
     public List<Workout> viewWorkouts(LocalDate from, LocalDate to){
-        List<Workout> foundWorkouts = workoutRepo.findBetween(from,to);
-
+        Collection<Workout> foundWorkouts = workoutRepo.findBetween();
+        List<Workout> inRangeWorkouts = new ArrayList<>();
+        for (Workout w : foundWorkouts){
+            LocalDate workoutDate = w.getDate();
+            boolean inRange = (!workoutDate.isBefore(from) && !workoutDate.isAfter(to));
+            if (inRange) inRangeWorkouts.add(w);
+        }
+        return inRangeWorkouts;
     }
+
+
+    public void removeWorkout(LocalDate workoutDate){
+        workoutRepo.delete(workoutDate);
+    }
+
 }

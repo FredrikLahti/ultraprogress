@@ -4,13 +4,13 @@ import se.lahti.ultraprog.domain.Workout;
 import se.lahti.ultraprog.domain.WorkoutId;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.Collection;
+
 
 public interface WorkoutRepoInterface {
 
     void save(Workout w);
     Workout findWorkoutByDate(LocalDate workoutDate);
-    List<Workout> findBetween(LocalDate from, LocalDate to);
-    void delete(WorkoutId id);
+    Collection<Workout> findBetween();
+    void delete(LocalDate workoutDate);
 }

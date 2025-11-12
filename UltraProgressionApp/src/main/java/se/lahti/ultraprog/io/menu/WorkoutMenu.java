@@ -7,6 +7,8 @@ import se.lahti.ultraprog.io.nav.*;
 import se.lahti.ultraprog.service.Services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class WorkoutMenu implements Menu{
@@ -44,9 +46,20 @@ public class WorkoutMenu implements Menu{
             case 3 -> {
                 LocalDate from = io.readIsoDate("Enter from what Date to view Workouts: ");
                 LocalDate until = io.readIsoDate("Enter until what Date to view Workouts: ");
-                services.workoutService().viewWorkouts(from, until);
+                List<Workout> workouts = services.workoutService().viewWorkouts(from, until);
+                io.printf("Workouts between %tF and %tF:", from , until);
+                for(Workout w : workouts){
+                    io.printf("Surface: %s%nDistance: %.2f%nTime: %.2f%nPace: %.2f%nCalories burned: " +
+                                    "%d%nAverage Cadence: %d%nAverage Heart Rate: %d%nWorkout Date: %tF%n",
+                            w.getGroundType(),w.getDistance(),
+                            w.getTime(), w.getPace(), w.getCalories(), w.getCadence(),w.getHr(), w.getDate());
+                }
+                return Stay.get();
             }
-            case 4 -> {}
+            case 4 -> {
+                services.workoutService().removeWorkout(io.readIsoDate("Enter date of workout: "));
+                io.println("Workout has successfully been removed");
+            }
             case 0 -> {return Back.get();}
             default -> io.println("Invalid entry, try again..");
         };

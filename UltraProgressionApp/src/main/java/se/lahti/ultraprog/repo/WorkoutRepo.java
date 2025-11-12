@@ -38,13 +38,13 @@ public class WorkoutRepo implements WorkoutRepoInterface{
 
     }
 
-    public void delete(WorkoutId id){
+    public void delete(LocalDate workoutDate){
+        storedWorkouts.remove(dateToId.get(workoutDate));
 
     }
 
-    public List<Workout> findBetween(LocalDate from, LocalDate to){
-
-
+    public Collection<Workout> findBetween(){
+        return storedWorkouts.values();
     }
 
     public Workout findWorkoutByDate(LocalDate workoutDate){
